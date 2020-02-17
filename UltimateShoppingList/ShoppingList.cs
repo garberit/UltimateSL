@@ -33,7 +33,12 @@ namespace UltimateShoppingList
 		{
 			ShopListProducts.Add(p);
 		}
-		
+
+		public void RemoveProducts(Product p)
+		{
+			ShopListProducts.Remove(p);
+		}
+
 
 		#endregion
 

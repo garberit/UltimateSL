@@ -42,11 +42,21 @@ namespace UltimateShoppingList
 						var shoppingListNumber = Convert.ToInt32(Console.ReadLine());
 						while (true)
 						{
-							Console.Write("Would you like to add a product to your list? y/n: ");
+							Console.Write("Would you like to add a product to your list? y/n. Type r to remove a product: ");
 							var response = Console.ReadLine().ToLower();
 							if (response == "y")
 							{
 								ProductAddingQuestionnaire(shoppingListNumber);
+							}
+							else if (response == "r")
+							{
+								Factory.PrintProdList(shoppingListNumber);
+								Console.Write("What is the ID of the product you with to remove?");
+								var productSelectedToRemove = Convert.ToInt32(Console.ReadLine());
+								Factory.RemoveProdByID(shoppingListNumber, productSelectedToRemove);
+								Console.WriteLine("Product removed succesfully.");
+								Factory.PrintProdList(shoppingListNumber);
+
 							}
 							else if (response == "n")
 							{
@@ -81,9 +91,10 @@ namespace UltimateShoppingList
 			Console.WriteLine("If you know the price, please type here. (hit Enter to skip): ");
 			var answer2 = Console.ReadLine();
 			decimal answer1 = 1;
-			while (!Decimal.TryParse(answer2, out answer1))
+			if (!Decimal.TryParse(answer2, out answer1))
 			{
-				Console.WriteLine("Please enter a decimal value");
+				
+				answer2 = "0";
 			}
 			var Pprice = Convert.ToDecimal(answer2);
 
@@ -92,20 +103,12 @@ namespace UltimateShoppingList
 
 			Product p = Factory.CreateNewProduct(Pname, Pcat, Pprice, pNotes, pQuantity);
 			Factory.AddProduct(shoppingListNumber, p);
-			Console.WriteLine($"Name: {Pname}, Quantity: {pQuantity}, Category: {Pcat}, Price: {Pprice:C}, Notes: {pNotes}");
+			Console.WriteLine($"ID: {p.ProductID}, Name: {Pname}, Quantity: {pQuantity}, Category: {Pcat}, Price: {Pprice:C}, Notes: {pNotes}");
+
 		}
 
-		//private static void PrintMyProducts(int shoppingListNumber)
-		//{
-		//	var listnum =shoppingListNumber;
-		//	var lists = Factory.GetShoppingListsProduct(Convert.ToInt32(listnum));
-		//	foreach (var prod in lists)
-		//	{
-		//		Console.WriteLine($"{prod.ProductName}, #{prod.ProductQuantity}, Notes: {prod.ProductNotes}, Category: {prod.ProductCategory}, Price: {prod.ProductPrice}");
-		//	}
 
-
-		//}
+		
 
 		private static void PrintAllShoppingLists()
 		{
