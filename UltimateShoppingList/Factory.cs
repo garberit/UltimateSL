@@ -117,7 +117,7 @@ namespace UltimateShoppingList
 			var shoplist = ShoppingLists.SingleOrDefault(sl => sl.ShopListID == ShoppingListID);
 			if (shoplist == null)
 			{
-				//exception
+				//exception 
 				return;
 			}
 			var prodlist = shoplist.ShopListProducts.SingleOrDefault(pi => pi.ProductID == p.ProductID);
