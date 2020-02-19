@@ -25,7 +25,7 @@ namespace UltimateShoppingList
 		#region Method
 		public ShoppingList()
 		{
-			ShopListID += LastShopListID;
+			ShopListID = LastShopListID++;
 
 		}
 

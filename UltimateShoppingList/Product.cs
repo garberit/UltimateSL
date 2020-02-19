@@ -39,7 +39,7 @@ namespace UltimateShoppingList
         #region Methods
         public Product()
         {
-            ProductID += lastProductID;
+            ProductID = lastProductID++;
 
         }
 

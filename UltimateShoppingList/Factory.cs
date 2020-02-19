@@ -132,6 +132,11 @@ namespace UltimateShoppingList
 			Activities.Add(activity);
 		}
 
+		public static IEnumerable<Activity> GetActivitiesByShoppingListNumber(int ShoppingListNumber)
+		{
+			return Activities.Where(a => a.ActivityShoppingListID == ShoppingListNumber);
+		}
+
 
 		#endregion
 

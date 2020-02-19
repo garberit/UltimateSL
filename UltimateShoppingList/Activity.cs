@@ -13,10 +13,12 @@ namespace UltimateShoppingList
 		public int ActivityShoppingListID { get; set; }
 
 		public int ActivityUserID { get; set; }
+		private static int lastActivityID = 0;
 
 
 		public Activity()
 		{
+			ActivityID = lastActivityID++;
 
 		}
 	}

@@ -29,7 +29,7 @@ namespace UltimateShoppingList
 		#region Methods
 		public Groups()
 		{
-			GroupID += LastGroupID;
+			GroupID = LastGroupID++;
 
 		}
 

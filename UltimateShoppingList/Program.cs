@@ -17,6 +17,7 @@ namespace UltimateShoppingList
 				Console.WriteLine("1 - Create New List");
 				Console.WriteLine("2 - Edit my list");
 				Console.WriteLine("3 - Print all lists");
+				Console.WriteLine("4 - Print activities in my list");
 				Console.WriteLine("*********************");
 				Console.Write("Please select an option ");
 
@@ -67,6 +68,16 @@ namespace UltimateShoppingList
 						break;
 					case "3":
 						PrintAllShoppingLists();
+						break;
+					case "4":
+						PrintAllShoppingLists();
+						Console.WriteLine("What is the ID of the list you wish to see activities for? ");
+						var answerId = Convert.ToInt32(Console.Read());
+						var filteredList = Factory.GetActivitiesByShoppingListNumber(answerId);
+						foreach (var item in filteredList)
+						{
+							Console.WriteLine($"Activity Type: {item.ActivityID}, Activity Description: {item.ActivityDescription}, Date Created: {item.ActivityDate}");
+						}
 						break;
 					default:
 						break;

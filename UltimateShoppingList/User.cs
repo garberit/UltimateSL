@@ -23,7 +23,7 @@ namespace UltimateShoppingList
 
 		public User()
 		{
-			UserID += lastUserID;
+			UserID = lastUserID++;
 		}
 
 		#endregion
