@@ -72,8 +72,7 @@ namespace UltimateShoppingList
 					case "4":
 						PrintAllShoppingLists();
 						Console.WriteLine("What is the ID of the list you wish to see activities for? ");
-						var answerId = Convert.ToInt32(Console.Read());
-						var filteredList = Factory.GetActivitiesByShoppingListNumber(answerId);
+						var filteredList = Factory.GetActivitiesByShoppingListNumber(Convert.ToInt32(Console.ReadLine()));
 						foreach (var item in filteredList)
 						{
 							Console.WriteLine($"Activity Type: {item.ActivityID}, Activity Description: {item.ActivityDescription}, Date Created: {item.ActivityDate}");

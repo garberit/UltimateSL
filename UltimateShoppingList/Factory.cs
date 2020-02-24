@@ -9,7 +9,7 @@ namespace UltimateShoppingList
 	{
 		#region Properties
 		private static List<ShoppingList> ShoppingLists = new List<ShoppingList>();
-		private static List<Activity> Activities = new List<Activity>();
+		public static List<Activity> Activities = new List<Activity>();
 		public static List<Product> Products = new List<Product>();
 
 		#endregion
@@ -39,6 +39,14 @@ namespace UltimateShoppingList
 			var prodlist = shoplist.ShopListProducts.SingleOrDefault(pi => pi.ProductID == ProdID);
 			shoplist.ShopListProducts.Remove(prodlist);
 
+			var activity = new Activity
+			{
+				ActivityDate = DateTime.UtcNow,
+				ActivityDescription = "Removing Product",
+				ActivityShoppingListID = ShoppingListID
+			};
+			Activities.Add(activity);
+
 		}
 		public static Product CreateNewProduct(string name, PCategory category, decimal price, string notes, int quantity)
 		{
@@ -50,6 +58,7 @@ namespace UltimateShoppingList
 				ProductNotes = notes,
 				ProductQuantity = quantity
 			};
+
 			return p;
 
 			
@@ -58,6 +67,14 @@ namespace UltimateShoppingList
 		{			
 			ShopID = s.ShopListID;			
 			s.ShopListProducts.Add(p);
+
+			var activity = new Activity
+			{
+				ActivityDate = DateTime.UtcNow,
+				ActivityDescription = "Adding Product",
+				ActivityShoppingListID = ShopID
+			};
+			Activities.Add(activity);
 			return s;
 
 		}
@@ -112,7 +129,7 @@ namespace UltimateShoppingList
 			Activities.Add(activity);
 		}
 
-		public static void RemoveProduct(int ShoppingListID, Product p) //create one to remove product as well
+		public static void RemoveProduct(int ShoppingListID, Product p)
 		{
 			var shoplist = ShoppingLists.SingleOrDefault(sl => sl.ShopListID == ShoppingListID);
 			if (shoplist == null)
@@ -135,6 +152,7 @@ namespace UltimateShoppingList
 		public static IEnumerable<Activity> GetActivitiesByShoppingListNumber(int ShoppingListNumber)
 		{
 			return Activities.Where(a => a.ActivityShoppingListID == ShoppingListNumber);
+			
 		}
 
 
