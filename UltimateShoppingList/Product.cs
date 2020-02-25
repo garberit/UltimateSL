@@ -32,6 +32,8 @@ namespace UltimateShoppingList
         public string ProductNotes { get; set; }
         public int ProductQuantity { get; set; }
         public DateTime ProductCreationDate { get; private set; }
+        public User ProductCreatedBy { get; set; }
+        public Groups ProductSharedWith { get; set; }
 
         #endregion
 
