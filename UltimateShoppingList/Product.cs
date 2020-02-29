@@ -23,17 +23,18 @@ namespace UltimateShoppingList
     class Product
 	{
 		#region Properties
-		private static int lastProductID = 0;
-        public int ProductID { get; private set; }
+        public int ProductID { get;  set; }
         public string ProductName { get; set; }
         public PCategory ProductCategory { get; set; }
         public decimal ProductPrice { get; set; }
         public bool ProductPickedUp { get; set; }
         public string ProductNotes { get; set; }
         public int ProductQuantity { get; set; }
-        public DateTime ProductCreationDate { get; private set; }
+        public DateTime ProductCreationDate { get;  set; }
         public User ProductCreatedBy { get; set; }
         public Groups ProductSharedWith { get; set; }
+        public ShoppingList ShoppingList { get; set; }
+        public int ShoppingListID { get; set; }
 
         #endregion
 
@@ -41,7 +42,6 @@ namespace UltimateShoppingList
         #region Methods
         public Product()
         {
-            ProductID = lastProductID++;
 
         }
 

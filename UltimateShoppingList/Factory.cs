@@ -8,9 +8,10 @@ namespace UltimateShoppingList
 	static class Factory
 	{
 		#region Properties
-		private static List<ShoppingList> ShoppingLists = new List<ShoppingList>();
-		public static List<Activity> Activities = new List<Activity>();
-		public static List<Product> Products = new List<Product>();
+		private static ShoppingListContext db = new ShoppingListContext();
+		//private static List<ShoppingList> ShoppingLists = new List<ShoppingList>();
+		//public static List<Activity> Activities = new List<Activity>();
+		//public static List<Product> Products = new List<Product>();
 
 		#endregion
 
@@ -18,26 +19,25 @@ namespace UltimateShoppingList
 
 		#region Methods
 
-		public static ShoppingList CreateNewList(string name, List<Product> l, string email)
+		public static ShoppingList CreateNewList(string name, string email)
 		{
 			ShoppingList s = new ShoppingList()
 			{
 				ShopListName = name,
-				ShopListProducts = l,
 				ShopListEmailAddressOfOwner = email,
 				
 			};
 
-			ShoppingLists.Add(s);
+			db.ShoppingListsTable.Add(s);
 			return s;
 		}
 
 		public static void RemoveProdByID(int ShoppingListID, int ProdID)
 		{
-			var shoplist = ShoppingLists.SingleOrDefault(sl => sl.ShopListID == ShoppingListID);
+			var shoplist = db.ShoppingListsTable.SingleOrDefault(sl => sl.ShopListID == ShoppingListID);
+			var prod = db.ProductsTable.SingleOrDefault(p => p.ProductID == ProdID);
 			
-			var prodlist = shoplist.ShopListProducts.SingleOrDefault(pi => pi.ProductID == ProdID);
-			shoplist.ShopListProducts.Remove(prodlist);
+			shoplist.RemoveProducts(prod);
 
 			var activity = new Activity
 			{
@@ -45,7 +45,7 @@ namespace UltimateShoppingList
 				ActivityDescription = "Removing Product",
 				ActivityShoppingListID = ShoppingListID
 			};
-			Activities.Add(activity);
+			db.ActivitiesTable.Add(activity);
 
 		}
 		public static Product CreateNewProduct(string name, PCategory category, decimal price, string notes, int quantity)
@@ -66,7 +66,7 @@ namespace UltimateShoppingList
 		public static ShoppingList AddProdToList (Product p, ShoppingList s, int ShopID)
 		{			
 			ShopID = s.ShopListID;			
-			s.ShopListProducts.Add(p);
+			s.AddProducts(p);
 
 			var activity = new Activity
 			{
@@ -74,13 +74,13 @@ namespace UltimateShoppingList
 				ActivityDescription = "Adding Product",
 				ActivityShoppingListID = ShopID
 			};
-			Activities.Add(activity);
+			db.ActivitiesTable.Add(activity);
 			return s;
 
 		}
 		public static void PrintProdList(int ShoppingListID) 
 		{
-			var shoplist = ShoppingLists.SingleOrDefault(sl => sl.ShopListID == ShoppingListID);
+			var shoplist = db.ShoppingListsTable.SingleOrDefault(sl => sl.ShopListID == ShoppingListID);
 			if (shoplist == null)
 			{
 				//exception
@@ -90,7 +90,7 @@ namespace UltimateShoppingList
 			Console.WriteLine("Here are all the products in your list:");
 			Console.WriteLine("************************");
 
-			foreach (var item in shoplist.ShopListProducts)
+			foreach (var item in db.ProductsTable.Where(p => p.ShoppingListID == ShoppingListID))
 			{
 				Console.WriteLine($"ID: {item.ProductID}, Name: {item.ProductName}, Quantity: {item.ProductQuantity}, Category: {item.ProductCategory}, Price: {item.ProductPrice:C}, Notes: {item.ProductNotes}");
 			}
@@ -102,17 +102,17 @@ namespace UltimateShoppingList
 				ActivityDescription = "Printing products",
 				ActivityShoppingListID = shoplist.ShopListID
 			};
-			Activities.Add(activity);
+			db.ActivitiesTable.Add(activity);
 		}
 
 		public static IEnumerable<ShoppingList> GetShoppingListsByEmailAddress(string email)
 		{
-			return ShoppingLists.Where(sl => sl.ShopListEmailAddressOfOwner == email);
+			return db.ShoppingListsTable.Where(sl => sl.ShopListEmailAddressOfOwner == email);
 		}
 	
 		public static void AddProduct(int ShoppingListID, Product p) //create one to remove product as well
 		{
-			var shoplist = ShoppingLists.SingleOrDefault(sl => sl.ShopListID == ShoppingListID);
+			var shoplist = db.ShoppingListsTable.SingleOrDefault(sl => sl.ShopListID == ShoppingListID);
 			if (shoplist == null)
 			{
 				//exception
@@ -126,32 +126,35 @@ namespace UltimateShoppingList
 				ActivityDescription = "Adding a product",
 				ActivityShoppingListID = shoplist.ShopListID
 			};
-			Activities.Add(activity);
+			db.ActivitiesTable.Add(activity);
 		}
 
 		public static void RemoveProduct(int ShoppingListID, Product p)
 		{
-			var shoplist = ShoppingLists.SingleOrDefault(sl => sl.ShopListID == ShoppingListID);
+			var shoplist = db.ShoppingListsTable.SingleOrDefault(sl => sl.ShopListID == ShoppingListID);
+			var id = p.ProductID;
+			var prod = db.ProductsTable.SingleOrDefault(p => p.ProductID == id);
+
+			shoplist.RemoveProducts(prod);
+
+			var activity = new Activity
+			{
+				ActivityDate = DateTime.UtcNow,
+				ActivityDescription = "Removing Product",
+				ActivityShoppingListID = ShoppingListID
+			};
+			db.ActivitiesTable.Add(activity);
 			if (shoplist == null)
 			{
 				//exception 
 				return;
 			}
-			var prodlist = shoplist.ShopListProducts.SingleOrDefault(pi => pi.ProductID == p.ProductID);
-
-			shoplist.RemoveProducts(p);
-			var activity = new Activity
-			{
-				ActivityDate = DateTime.UtcNow,
-				ActivityDescription = "Removing a product",
-				ActivityShoppingListID = shoplist.ShopListID
-			};
-			Activities.Add(activity);
+			
 		}
 
 		public static IEnumerable<Activity> GetActivitiesByShoppingListNumber(int ShoppingListNumber)
 		{
-			return Activities.Where(a => a.ActivityShoppingListID == ShoppingListNumber);
+			return db.ActivitiesTable.Where(a => a.ActivityShoppingListID == ShoppingListNumber);
 			
 		}
 

@@ -14,6 +14,10 @@ namespace UltimateShoppingList
 
 		public int ActivityUserID { get; set; }
 		private static int lastActivityID = 0;
+		public ShoppingList ShoppingList { get; set; }
+		public Product Product { get; set; }
+		public User User { get; set; }
+		public Groups Groups { get; set; }
 
 
 		public Activity()

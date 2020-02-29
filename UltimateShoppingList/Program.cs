@@ -32,10 +32,9 @@ namespace UltimateShoppingList
 					case "1":
 						Console.WriteLine("Please provide a name for the list: ");
 						string name = Console.ReadLine();
-						List<Product> l = new List<Product>();
 						Console.WriteLine("Please provide a email for the list: ");
 						string email = Console.ReadLine();
-						Factory.CreateNewList(name, l, email);
+						Factory.CreateNewList(name, email);
 						break;
 					case "2":
 						PrintAllShoppingLists();

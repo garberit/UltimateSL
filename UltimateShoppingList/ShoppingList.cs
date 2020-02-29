@@ -12,11 +12,12 @@ namespace UltimateShoppingList
 		public string ShopListName { get; set; }
 
 		public int ShopListID { get; set; }
-		public List<Product> ShopListProducts { get; set; }
+		//public List<Product> ShopListProducts { get; set; }
+		private static ShoppingListContext db = new ShoppingListContext();
+
 		public Groups ShopListUsers { get; set; }
 		public DateTime ShopListCreatedDate { get; set; }
 
-		private static int LastShopListID = 0;
 		public string ShopListEmailAddressOfOwner { get; set; }
 
 		#endregion
@@ -25,18 +26,17 @@ namespace UltimateShoppingList
 		#region Method
 		public ShoppingList()
 		{
-			ShopListID = LastShopListID++;
 
 		}
 
 		public void AddProducts(Product p)
 		{
-			ShopListProducts.Add(p);
+			db.ProductsTable.Add(p);
 		}
 
 		public void RemoveProducts(Product p)
 		{
-			ShopListProducts.Remove(p);
+			db.ProductsTable.Remove(p);
 		}
 
 

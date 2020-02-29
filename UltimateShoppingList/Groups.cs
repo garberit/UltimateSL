@@ -18,18 +18,16 @@ namespace UltimateShoppingList
 		public List<User> UsersInGroup { get; set; }
 		public GroupType GroupCategory { get; set; }
 		public DateTime GroupCreatedDate { get; set; }
-		public User GroupCreatedBy { get; set; }
+		public int GroupCreatedByUser { get; set; }
 		public int GroupID { get; set; }
 
-		private static int LastGroupID = 0;
-		public User ShopListOwner { get; set; }
+		public User User { get; set; }
 		#endregion
 
 
 		#region Methods
 		public Groups()
 		{
-			GroupID = LastGroupID++;
 
 		}
 
