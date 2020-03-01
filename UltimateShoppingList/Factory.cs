@@ -29,6 +29,7 @@ namespace UltimateShoppingList
 			};
 
 			db.ShoppingListsTable.Add(s);
+			db.SaveChanges();
 			return s;
 		}
 
@@ -46,6 +47,7 @@ namespace UltimateShoppingList
 				ActivityShoppingListID = ShoppingListID
 			};
 			db.ActivitiesTable.Add(activity);
+			db.SaveChanges();
 
 		}
 		public static Product CreateNewProduct(string name, PCategory category, decimal price, string notes, int quantity)
@@ -75,6 +77,7 @@ namespace UltimateShoppingList
 				ActivityShoppingListID = ShopID
 			};
 			db.ActivitiesTable.Add(activity);
+			db.SaveChanges();
 			return s;
 
 		}
@@ -103,6 +106,7 @@ namespace UltimateShoppingList
 				ActivityShoppingListID = shoplist.ShopListID
 			};
 			db.ActivitiesTable.Add(activity);
+			db.SaveChanges();
 		}
 
 		public static IEnumerable<ShoppingList> GetShoppingListsByEmailAddress(string email)
@@ -110,7 +114,7 @@ namespace UltimateShoppingList
 			return db.ShoppingListsTable.Where(sl => sl.ShopListEmailAddressOfOwner == email);
 		}
 	
-		public static void AddProduct(int ShoppingListID, Product p) //create one to remove product as well
+		public static void AddProduct(int ShoppingListID, Product p) 
 		{
 			var shoplist = db.ShoppingListsTable.SingleOrDefault(sl => sl.ShopListID == ShoppingListID);
 			if (shoplist == null)
@@ -127,6 +131,7 @@ namespace UltimateShoppingList
 				ActivityShoppingListID = shoplist.ShopListID
 			};
 			db.ActivitiesTable.Add(activity);
+			db.SaveChanges();
 		}
 
 		public static void RemoveProduct(int ShoppingListID, Product p)
@@ -144,6 +149,7 @@ namespace UltimateShoppingList
 				ActivityShoppingListID = ShoppingListID
 			};
 			db.ActivitiesTable.Add(activity);
+			db.SaveChanges();
 			if (shoplist == null)
 			{
 				//exception 

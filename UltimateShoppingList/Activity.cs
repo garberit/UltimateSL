@@ -13,7 +13,6 @@ namespace UltimateShoppingList
 		public int ActivityShoppingListID { get; set; }
 
 		public int ActivityUserID { get; set; }
-		private static int lastActivityID = 0;
 		public ShoppingList ShoppingList { get; set; }
 		public Product Product { get; set; }
 		public User User { get; set; }
@@ -22,7 +21,6 @@ namespace UltimateShoppingList
 
 		public Activity()
 		{
-			ActivityID = lastActivityID++;
 
 		}
 	}

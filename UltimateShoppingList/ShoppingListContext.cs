@@ -72,6 +72,8 @@ namespace UltimateShoppingList
 			});
 			modelBuilder.Entity<Activity>(e =>
 			{
+				e.Property(a => a.ActivityID)
+					.ValueGeneratedOnAdd();
 				e.ToTable("ActivitiesTable");
 				e.HasKey(a => a.ActivityID)
 					.HasName("PK_Activities");

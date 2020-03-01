@@ -10,23 +10,17 @@ namespace UltimateShoppingList
 
 		#region Properties
 		public string ShopListName { get; set; }
-
 		public int ShopListID { get; set; }
-		//public List<Product> ShopListProducts { get; set; }
 		private static ShoppingListContext db = new ShoppingListContext();
-
 		public Groups ShopListUsers { get; set; }
 		public DateTime ShopListCreatedDate { get; set; }
-
 		public string ShopListEmailAddressOfOwner { get; set; }
-
 		#endregion
 
 
 		#region Method
 		public ShoppingList()
 		{
-
 		}
 
 		public void AddProducts(Product p)
@@ -38,7 +32,6 @@ namespace UltimateShoppingList
 		{
 			db.ProductsTable.Remove(p);
 		}
-
 
 		#endregion
 
